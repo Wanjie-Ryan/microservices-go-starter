@@ -370,3 +370,15 @@ Use a proper domain name (recommended for production)
 **Makefile**
 
 - script for common terminal commands, instead of typing long docker/k8s commands everytime, define them in the Makefile.
+
+# TiltFile
+
+- Automates building your Go code into binaries.
+- Builds Docker images from those binaries.
+- Applies k8s manifests to deploy servcies into minikube
+- sets up live reloads and port forwarding so your dev loop is instant.
+
+**Analogy**
+
+- make this Go app work locally inside k8s whenever i change sth.
+

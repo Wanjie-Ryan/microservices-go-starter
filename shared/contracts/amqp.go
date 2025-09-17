@@ -1,5 +1,7 @@
 package contracts
-
+// RabbitMQ is a message broker that implements AMQP (Advanced Message Queuing Protocol)
+// Think of it as a post office for microservices:
+// - A service publishes a message (Trip created), another service subscribes and consumes that message(Payment service gets notified)
 // AmqpMessage is the message structure for AMQP.
 type AmqpMessage struct {
 	OwnerID string `json:"ownerId"`
@@ -9,6 +11,7 @@ type AmqpMessage struct {
 // Routing keys - using consistent event/command patterns
 const (
 	// Trip events (trip.event.*)
+	// publishes an event that trip event was created.
 	TripEventCreated             = "trip.event.created"
 	TripEventDriverAssigned      = "trip.event.driver_assigned"
 	TripEventNoDriversFound      = "trip.event.no_drivers_found"

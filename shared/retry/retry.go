@@ -26,6 +26,9 @@ func DefaultConfig() Config {
 }
 
 // WithBackoff executes the given operation with exponential backoff retry logic
+// runs an operation
+// if it fails, it waits, doubles wait time, then retries
+// stops after maxRetries or when ctx is cancelled
 func WithBackoff(ctx context.Context, cfg Config, operation func() error) error {
 	var err error
 	wait := cfg.InitialWait
