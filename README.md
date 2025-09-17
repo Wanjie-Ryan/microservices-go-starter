@@ -239,3 +239,102 @@ https://<IP_ADDRESS>
 Note: Since this is using a self-signed certificate, browsers will show a security warning. This is normal and expected. You can:
 Accept the warning in your browser (not recommended for production)
 Use a proper domain name (recommended for production)
+
+# OTHERS
+# SHARE RIDE && Business Problem
+
+- Allow Riders to schedule a ride(trip) to a destination via certified drivers.
+- Identify the code b/s functions/ domains.
+- Define the integration of service to achieve a Trip schedule flow.
+- Scalability
+
+![alt text](md-images/processflow.png)
+
+- Driver service -> Trip service -> Payment service
+  |
+  |
+  API GATEWAY
+
+- Driver service will handle the trip creation and matching. It also notifies drivers that a trip is available for them.
+- Trip service (CRUD) will handle the routes and fare calculation
+- Payments using stripe.
+
+# Communication styles
+
+1. HTTP/REST API
+
+- communication with outside of microservice
+
+2. RPC/gRPC
+
+- Gate to service communication
+
+3. Message broker - RabbitMQ
+
+- Decoupled and async communication btn services.
+- Commands and events.
+  ![alt text](md-images/comms.png)
+
+**Mermaid Live Editor**
+
+**Tilt**
+![alt text](md-images/tilt.png)
+
+**System Architecture**
+
+- Microservice
+
+1. Api-Gateway
+2. Trip service
+3. Driver service
+4. Payment service
+
+- Tooling
+
+1. RabbitMQ
+2. Jaeger - tracing requests across various microservices
+
+- Tilt
+
+# Tech Stack
+
+1. Go
+2. K8S
+3. RabbitMQ
+4. Docker
+5. Stripe
+6. Tilt
+
+- Tilt gives you smart rebuilds and live updates everywhere.
+
+7. GCP
+8. TS
+9. Mongo DB
+10. Jaeger
+
+- Tracing and observability tool that traces communication btn one microservice to another.
+
+11. Open source routing machine (OSRM)
+
+- Networking of paths, plotting maps
+  ![alt text](md-images/ms.png)
+
+**Cohesion vs Coupling**
+
+1. Cohesion - focuses on **whats inside** a module: keep related logic together
+
+- Refers to how closely related and focused the responsibilities of a single module or component are.
+- **High cohesion** - A module does one thing well and contains logically related functions/data.
+- **Low cohesion** - A module tries to do too many unrelated things.
+
+**Analogy**
+
+- If you’re writing a BookingService, and it only handles ride bookings (e.g., create booking, cancel booking, get ride history), that’s high cohesion. But if you start mixing in unrelated things like payment logic or user authentication inside it, cohesion drops
+
+2. Coupling - about how modules **connect** : keep dependencies minimal and clean
+
+- Measures how much one module knows about or relies on another.
+
+**Architecture Image**
+![alt text](md-images/architecture.png)
+![alt text](md-images/queue.png)
