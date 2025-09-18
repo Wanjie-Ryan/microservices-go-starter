@@ -382,3 +382,12 @@ Use a proper domain name (recommended for production)
 
 - make this Go app work locally inside k8s whenever i change sth.
 
+# DESIGN PATTERNS/SOFTWARE ARCHITECTURE PATTERNS
+
+**Architecture patterns**
+
+- How you structure whole systems or services. (Layered, Clean, Hexagonal, Microservices)
+
+**Design patterns**
+
+- Reusable solutions to smaller recurring problems within that architecture.(Repository pattern, Factory, Strategy)
