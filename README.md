@@ -391,3 +391,88 @@ Use a proper domain name (recommended for production)
 **Design patterns**
 
 - Reusable solutions to smaller recurring problems within that architecture.(Repository pattern, Factory, Strategy)
+
+1. Layered architecture
+
+- stack your code in horizontal layers with strict top-down flow.
+
+**Presentation/Transport**
+
+- HTTP, gRPC, Websocket handlers
+
+  **Business/Application/Service**
+
+- use-case logic
+
+  **Data Access**
+
+- DB queries, external APIs.
+
+**Rule- upper layers can depend on lower layers, not vice versa**
+
+2. Clean Architecture (Hexagonal/Onion family)
+
+- Center your system around the domain/use-cases and make everything else plug-ins.
+- Dependencies point inward toward the domain. Interfaces live in the core; implementations live at the edges.
+  ![alt text](md-images/clean-arch.png)
+  **Rule- Inner layers know nothing about outer layers. The domain doesn't import HTTP, SQL...**
+
+**Analogy**
+
+- A power outlet
+- Appliance (domain/use cases) expects a simple interface; electricty.
+- Plug adapters(adapters) connect it to different sockets (HTTP, DB, AMQP)
+- Grid(frameworks/drivers) is replaceable; the appliance logic stays the same.
+
+**DomainLayer**
+
+- Define Trip, Driver, value objects
+- Define ports: TripRepo, TripeEventPublisher
+
+**service (use cases)**
+
+- RequestTrip, AssignDriver, CompleteTrip
+- All b/s rules live here
+
+**Infrastructure**
+
+- Mongo/Postgres repo implementing TripRepository
+- AMQP publisher implementing TripEventPublisher using routing keys.
+
+**Transport**
+
+- HTTP/gRPC handlers
+
+**Wiring**
+
+- compose all files here
+
+3. Repository pattern
+
+- put a thing interface in your domain that describes the persistence you need.
+
+// internal/domain/trip.go
+package domain
+
+type Trip struct {
+ID string
+RiderID string
+DriverID \*string
+Status string // requested, assigned, enroute, completed, cancelled
+// ...
+}
+
+type TripRepository interface {
+Create(trip *Trip) error
+FindByID(id string) (*Trip, error)
+Update(trip *Trip) error
+FindPendingNearby(lat, lng float64) ([]*Trip, error)
+}
+
+- Implement it in infrastructure
+  // internal/infrastructure/repository/mongo_trip_repo.go
+  type MongoTripRepo struct { col \*mongo.Collection }
+
+func (r *MongoTripRepo) Create(t *domain.Trip) error { /_ insert _/ }
+func (r *MongoTripRepo) FindByID(id string) (*domain.Trip, error) { /_ find _/ }
+// ...
