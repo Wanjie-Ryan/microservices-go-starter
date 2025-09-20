@@ -476,3 +476,12 @@ FindPendingNearby(lat, lng float64) ([]*Trip, error)
 func (r *MongoTripRepo) Create(t *domain.Trip) error { /_ insert _/ }
 func (r *MongoTripRepo) FindByID(id string) (*domain.Trip, error) { /_ find _/ }
 // ...
+
+# Why K8S
+- Auto scaling
+- Load balancing
+- self healing
+- consistency across environments
+
+# Gateway
+![alt text](md-images/gateway.png)
